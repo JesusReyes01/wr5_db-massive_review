@@ -6,11 +6,15 @@ module.exports = {
         // get the users from the db
         db.users.get_all_users()
             .then(dbRes => {
+                // send all the users as a response
                 res.status(200).send(dbRes)
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                // send an error response if error
+                console.log(err)
+                res.status(500).send({message: 'Something went wrong with the database'})
+            });
 
-        // send all the users as a response
     },
     addUser: (req, res) => {
         // need access to db
@@ -22,9 +26,13 @@ module.exports = {
         // add a user to the db and return just that user
         db.users.add_user({ name, paid })
             .then(dbRes => {
+                // send the user as a response
                 res.status(200).send(dbRes)
             })
-            .catch(err => console.log(err))
-        // send the user as a response
+            .catch(err => {
+                // send an error response if error
+                console.log(err)
+                res.status(500).send({message: 'Something went wrong with the database'})
+            });
     }
 }
